@@ -1,12 +1,12 @@
------t-
-/     l
+-----z-
+/     t
 /     -
 *     -
 -     -
 -     p
 -----p-
 
-SimpleTomato
+SimpleZorg
 
 2 1
 4 1

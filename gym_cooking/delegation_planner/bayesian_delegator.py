@@ -53,6 +53,7 @@ class BayesianDelegator(Delegator):
         Return:
             Boolean of whether or not the subtask allocations have changed.
         """
+        print("Running delegator.should_reset_priors")
         if self.probs is None:
             return True
         # Get currently available subtasks.
@@ -175,6 +176,7 @@ class BayesianDelegator(Delegator):
         """Use own beliefs to infer what other agents will do."""
         # A dictionary mapping agent name to a planner.
         # The planner is based on THIS agent's planner because agents are decentralized.
+        print("Running delegator.get_other_agent_planners")
         planners = {}
         for other_agent_name in self.all_agent_names:
             # Skip over myself.
@@ -405,6 +407,7 @@ class BayesianDelegator(Delegator):
     def select_subtask(self, agent_name):
         """Return subtask and subtask_agent_names for agent with agent_name
         with max. probability."""
+        print("Running delegator.select_subtask")
         max_subtask_alloc = self.probs.get_max()
         if max_subtask_alloc is not None:
             for t in max_subtask_alloc:
@@ -423,6 +426,7 @@ class BayesianDelegator(Delegator):
         """Apply Bayesian update based on previous observation (obs_tms1)
         and most recent actions taken (actions_tm1). Beta is used to determine
         how rational agents act."""
+        print("Running delegator.bayes_update")
         # First, remove unreachable/undoable subtask agent subtask_allocs.
         for subtask_alloc in self.probs.enumerate_subtask_allocs():
             for t in subtask_alloc:

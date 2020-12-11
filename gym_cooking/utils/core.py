@@ -19,11 +19,13 @@ class Rep:
     FLOOR = ' '
     COUNTER = '-'
     CUTBOARD = '/'
+#    MASHER = 'M'
     DELIVERY = '*'
     TOMATO = 't'
     LETTUCE = 'l'
     ONION = 'o'
     PLATE = 'p'
+    ZORG = 'z'
 
 class GridSquare:
     def __init__(self, name, location):
@@ -98,6 +100,16 @@ class Cutboard(GridSquare):
     def __hash__(self):
         return GridSquare.__hash__(self)
 
+#class Masher(GridSquare):
+#    def __init__(self, location):
+#        GridSquare.__init__(self, "Masher", location)
+#        self.rep = Rep.Masher
+#        self.collidable = True
+#    def __eq__(self, other):
+#        return GridSquare.__eq__(self, other)
+#    def __hash__(self):
+#        return GridSquare.__hash__(self)
+#
 class Delivery(GridSquare):
     def __init__(self, location):
         GridSquare.__init__(self, "Delivery", location)
@@ -167,12 +179,22 @@ class Object:
         if len(self.contents) > 1: return False
         return self.contents[0].needs_chopped()
 
+#    def needs_mashed(self):
+#        if len(self.contents) > 1: return False
+#        return self.contents[0].needs_mashed()
+#
     def is_chopped(self):
         for c in self.contents:
             if isinstance(c, Plate) or c.get_state() != 'Chopped':
                 return False
         return True
 
+#    def is_mashed(self):
+#        for c in self.contents:
+#            if isinstance(c, Plate) or c.get_state() != 'Mashed':
+#                return False
+#        return True
+#
     def chop(self):
         assert len(self.contents) == 1
         assert self.needs_chopped()
@@ -180,6 +202,13 @@ class Object:
         assert not (self.needs_chopped())
         self.update_names()
 
+#    def mash(self):
+#        assert len(self.contents) == 1
+#        assert self.needs_mashed()
+#        self.contents[0].update_state()
+#        assert not (self.needs_mashed())
+#        self.update_names()
+#
     def merge(self, obj):
         if isinstance(obj, Object):
             # move obj's contents into this instance
@@ -233,10 +262,12 @@ def mergeable(obj1, obj2):
 class FoodState:
     FRESH = globals()['recipe'].__dict__['Fresh']
     CHOPPED = globals()['recipe'].__dict__['Chopped']
+#    MASHED = globals()['recipe'].__dict__['Mashed']
 
 class FoodSequence:
     FRESH = [FoodState.FRESH]
     FRESH_CHOPPED = [FoodState.FRESH, FoodState.CHOPPED]
+#    FRESH_MASHED = [FoodState.FRESH, FoodState.MASHED]
 
 class Food:
     def __init__(self):
@@ -322,6 +353,19 @@ class Onion(Food):
     def __hash__(self):
         return Food.__hash__(self)
 
+class Zorg(Food):
+    def __init__(self, state_index = 0):
+        self.state_index = state_index   # index in food's state sequence
+#        self.state_seq = FoodSequence.FRESH_MASHED
+        self.state_seq = FoodSequence.FRESH_CHOPPED
+        self.rep = 'z'
+        self.name = 'Zorg'
+        Food.__init__(self)
+    def __eq__(self, other):
+        return Food.__eq__(self, other)
+    def __hash__(self):
+        return Food.__hash__(self)
+
 
 # -----------------------------------------------------------
 
@@ -350,10 +394,12 @@ RepToClass = {
     Rep.FLOOR: globals()['Floor'],
     Rep.COUNTER: globals()['Counter'],
     Rep.CUTBOARD: globals()['Cutboard'],
+#    Rep.MASHER: globals()['Masher'],
     Rep.DELIVERY: globals()['Delivery'],
     Rep.TOMATO: globals()['Tomato'],
     Rep.LETTUCE: globals()['Lettuce'],
     Rep.ONION: globals()['Onion'],
+    Rep.ZORG: globals()['Zorg'],
     Rep.PLATE: globals()['Plate'],
 }
 

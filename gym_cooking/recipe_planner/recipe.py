@@ -23,6 +23,11 @@ class Recipe:
             self.actions.add(recipe.Merge(item.name, 'Plate',\
                 [item.state_seq[-1](item.name), recipe.Fresh('Plate')], None))
 
+#        if item.state_seq == FoodSequence.FRESH_MASHED:
+#            self.actions.add(recipe.Mash(item.name))
+#            self.actions.add(recipe.Merge(item.name, 'Plate',\
+#                [item.state_seq[-1](item.name), recipe.Fresh('Plate')], None))
+
     def add_goal(self):
         self.contents = sorted(self.contents, key = lambda x: x.name)   # list of Food objects
         self.contents_names = [c.name for c in self.contents]   # list of strings
@@ -76,6 +81,13 @@ class SimpleLettuce(Recipe):
     def __init__(self):
         Recipe.__init__(self, 'Lettuce')
         self.add_ingredient(Lettuce(state_index=-1))
+        self.add_goal()
+        self.add_merge_actions()
+
+class SimpleZorg(Recipe):
+    def __init__(self):
+        Recipe.__init__(self, 'Zorg')
+        self.add_ingredient(Zorg(state_index=-1))
         self.add_goal()
         self.add_merge_actions()
 

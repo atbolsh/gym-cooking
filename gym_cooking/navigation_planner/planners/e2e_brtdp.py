@@ -527,6 +527,7 @@ class E2E_BRTDP:
 
     def get_next_action(self, env, subtask, subtask_agent_names, other_agent_planners):
         """Return next action."""
+        print("Running planner.get_next_action")
         print("-------------[e2e]-----------")
         self.removed_object = None
         start_time = time.time()

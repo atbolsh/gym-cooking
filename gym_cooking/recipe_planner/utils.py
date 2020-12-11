@@ -43,6 +43,10 @@ class Chopped(Predicate):
     def __init__(self, obj):
         Predicate.__init__(self, 'Chopped', (obj,))
 
+#class Mashed(Predicate):
+#    def __init__(self, obj):
+#        Predicate.__init__(self, 'Mashed', (obj,))
+
 class Cooked(Predicate):
     def __init__(self, obj):
         Predicate.__init__(self, 'Cooked', (obj,))
@@ -133,6 +137,20 @@ class Chop(Action):
         self.post_add_default = [Chopped(obj)]
 
         Action.__init__(self, 'Chop', pre, post_add)
+
+#'''
+#Mash(X)
+#Pre: Fresh(X)
+#Post: Mashed(X), !Fresh(X)
+#'''
+#class Mash(Action):
+#    def __init__(self, obj, pre=None, post_add=None):
+#        self.args = (obj,)
+#
+#        self.pre_default = [Fresh(obj)]
+#        self.post_add_default = [Mashed(obj)]
+#
+#        Action.__init__(self, 'Mash', pre, post_add)
 
 '''
 Merge(X, Y)

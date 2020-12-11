@@ -129,3 +129,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Artem Steps
+*steps*
+*Steps*
+*plan*
+*notes*
+

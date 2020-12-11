@@ -11,6 +11,7 @@ StringToGridSquare = {
         "Lettuce"  : Counter,
         "Onion"    : Counter,
         "Plate"    : Counter,
+        "Zorg"     : Counter,
         "Cutboard" : Cutboard,
         "Delivery" : Delivery,
         }
@@ -19,6 +20,7 @@ StringToObject = {
         "Tomato"  : Tomato,
         "Lettuce" : Lettuce,
         "Onion"   : Onion,
+        "Zorg"    : Zorg,
         }
 
 

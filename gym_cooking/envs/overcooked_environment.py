@@ -103,7 +103,7 @@ class OvercookedEnvironment(gym.Env):
                 elif phase == 1:
                     for x, rep in enumerate(line):
                         # Object, i.e. Tomato, Lettuce, Onion, or Plate.
-                        if rep in 'tlop':
+                        if rep in 'tlopz':
                             counter = Counter(location=(x, y))
                             obj = Object(
                                     location=(x, y),

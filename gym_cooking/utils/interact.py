@@ -45,12 +45,14 @@ def interact(agent, world):
                     agent.release()
 
 
-        # if holding something, empty gridsquare in front --> chop or drop
+        # if holding something, empty gridsquare in front --> chop, mash or drop
         elif not world.is_occupied(gs.location):
             obj = agent.holding
             if isinstance(gs, Cutboard) and obj.needs_chopped() and not world.arglist.play:
                 # normally chop, but if in playable game mode then put down first
                 obj.chop()
+#            elif isinstance(gs, Masher) and obj.needs_mashed() and not world.arglist.play:
+#                obj.mash()
             else:
                 gs.acquire(obj) # obj is put onto gridsquare
                 agent.release()
@@ -65,6 +67,8 @@ def interact(agent, world):
             # if in playable game mode, then chop raw items on cutting board
             if isinstance(gs, Cutboard) and obj.needs_chopped() and world.arglist.play:
                 obj.chop()
+#            elif isinstance(gs, Masher) and obj.needs_mashed() and world.arglist.play:
+#                obj.mash() 
             else:
                 gs.release()
                 agent.acquire(obj)

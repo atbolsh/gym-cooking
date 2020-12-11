@@ -81,6 +81,7 @@ class RealAgent:
 
     def select_action(self, obs):
         """Return best next action for this agent given observations."""
+        print("Running select_action")
         sim_agent = list(filter(lambda x: x.name == self.name, obs.sim_agents))[0]
         self.location = sim_agent.location
         self.holding = sim_agent.holding
@@ -98,6 +99,7 @@ class RealAgent:
 
     def get_subtasks(self, world):
         """Return different subtask permutations for recipes."""
+        print("Running get_subtasks")
         self.sw = STRIPSWorld(world, self.recipes)
         # [path for recipe 1, path for recipe 2, ...] where each path is a list of actions.
         subtasks = self.sw.get_subtasks(max_path_length=self.arglist.max_num_subtasks)
@@ -111,6 +113,7 @@ class RealAgent:
 
     def setup_subtasks(self, env):
         """Initializing subtasks and subtask allocator, Bayesian Delegation."""
+        print("Running setup_subtasks")
         self.incomplete_subtasks = self.get_subtasks(world=env.world)
         self.delegator = BayesianDelegator(
                 agent_name=self.name,
@@ -121,12 +124,14 @@ class RealAgent:
 
     def reset_subtasks(self):
         """Reset subtasks---relevant for Bayesian Delegation."""
+        print("Running reset_subtasks")
         self.subtask = None
         self.subtask_agent_names = []
         self.subtask_complete = False
 
     def refresh_subtasks(self, world):
         """Refresh subtasks---relevant for Bayesian Delegation."""
+        print("Running refresh_subtasks")
         # Check whether subtask is complete.
         self.subtask_complete = False
         if self.subtask is None or len(self.subtask_agent_names) == 0:
@@ -149,6 +154,7 @@ class RealAgent:
 
     def update_subtasks(self, env):
         """Update incomplete subtasks---relevant for Bayesian Delegation."""
+        print("Running update_subtasks")
         if ((self.subtask is not None and self.subtask not in self.incomplete_subtasks)
                 or (self.delegator.should_reset_priors(obs=copy.copy(env),
                             incomplete_subtasks=self.incomplete_subtasks))):
